@@ -17,6 +17,17 @@ void svc_handler       (void) __attribute__ ((weak, alias("default_handler")));
 void debugmon_handler  (void) __attribute__ ((weak, alias("default_handler")));
 void pendsv_handler    (void) __attribute__ ((weak, alias("default_handler")));
 void systick_handler   (void) __attribute__ ((weak, alias("default_handler")));
+void wwdg_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void exti16_handler       (void) __attribute__ ((weak, alias("default_handler")));
+void tamp_stamp_handler(void) __attribute__ ((weak, alias("default_handler")));     
+void rtc_wkup_handler  (void) __attribute__ ((weak, alias("default_handler")));
+void flash_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void rcc_handler       (void) __attribute__ ((weak, alias("default_handler")));
+void exti0_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void exti1_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void exti2_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void exti3_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void exti4_handler     (void) __attribute__ ((weak, alias("default_handler")));
 
 /* Variaveis exportadas pelo linker script */
 
