@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdint.h>
-#include <stdio.h>
+
 
 /* AHB1 Base Addresses ******************************************************/
 
@@ -51,8 +51,7 @@
 #define GPIO_MODER_OUTPUT (1) /* General purpose output mode */
 #define GPIO_MODER_ALT (2) /* Alternate mode */
 #define GPIO_MODER_ANALOG (3) /* Analog mode */
-#define GPIO_MODER_SHIFT(n) ((n) << 1)
-#define GPIO_MODER_MASK(n) (3 << GPIO_MODER_SHIFT(n))
+
 
 /* AHB1 Peripheral Clock enable register */
 
@@ -81,8 +80,8 @@
 #define GPIO_PUPDR_NONE (0)                     /* No pull-up, pull-down */
 #define GPIO_PUPDR_PULLUP (1)                   /* Pull-up */
 #define GPIO_PUPDR_PULLDOWN (2)                 /* Pull-down */
-#define GPIO_PUPDR_SHIFT (26)
-#define GPIO_PUPDR_MASK (3 << GPIO_PUPDR_SHIFT)
+#define GPIO_MODER_SHIFT(n) ((n) << 1)
+#define GPIO_MODER_MASK(n) (3 << GPIO_MODER_SHIFT(n))
 
 /*GPIO port input data register*/
 
@@ -151,14 +150,25 @@ int main(int argc, char *argv[])
     reg |= (GPIO_PUPDR_PULLUP << GPIO_PUPDR_SHIFT(0));
     *pGPIOA_PUPDR = reg;
 
+
+    static const uint32_t led_value[] = {250,1000};
+    uint8_t co;
+
     while(1)
     {
+        reg = *pGPIOA_IDR;
+        if ( (reg & GPIO_IDR(0)) == 0)
+        {
+            co++;
+            if (co > 1)
+            {
+                co = 0;
+            }    
+        }
         *pGPIOC_BSRR = GPIO_BSRR_SET(13);
-        led_status = 0;
-        for (uint32_t i = 0; i < LED_DELAY; i++);
+        for (uint32_t i = 0; i < led_value[co]; i++);
         *pGPIOC_BSRR = GPIO_BSRR_RST(13);
-        led_status = 1;
-        for (uint32_t i = 0; i < LED_DELAY; i++);
+        for (uint32_t i = 0; i < led_value[co]; i++);
     }
     /* Nao deveria chegar aqui */
     return EXIT_SUCCESS;
