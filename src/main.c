@@ -60,31 +60,42 @@
                                         enable */
 #define RCC_AHB1ENR_GPIOCEN (1 << 2) /* Bit 2: IO port C clock
                                         enable */
+/* GPIO port mode register */
+
+#define GPIO_MODER_INPUT (0) /* Input */
+#define GPIO_MODER_OUTPUT (1) /* General purpose output mode */
+#define GPIO_MODER_ALT (2) /* Alternate mode */
+#define GPIO_MODER_ANALOG (3) /* Analog mode */
+#define GPIO_MODER_SHIFT(n) ((n) << 1)
+#define GPIO_MODER_MASK(n) (3 << GPIO_MODER_SHIFT(n))
 
 /* GPIO port output type register */
-#define BOOT0_SHIFT
+
 #define GPIO_OTYPER_PP (0)                      /* 0=Output push-pull */
 #define GPIO_OTYPER_OD (1)                      /* 1=Output open-drain */
 #define GPIO_OT13_SHIFT (13)
 #define GPIO_OT13_MASK (1 << GPIO_OT13_SHIFT)
 
 /* GPIO port pull-up/pull-down register */
-#define BOOT0_PULLUP
+
 #define GPIO_PUPDR_NONE (0)                     /* No pull-up, pull-down */
 #define GPIO_PUPDR_PULLUP (1)                   /* Pull-up */
 #define GPIO_PUPDR_PULLDOWN (2)                 /* Pull-down */
-#define BOOT0_PULLUP_SHIFT
 #define GPIO_PUPDR_SHIFT (26)
 #define GPIO_PUPDR_MASK (3 << GPIO_PUPDR_SHIFT)
+
+/*GPIO port input data register*/
+
+#define GPIO_IDR(n) (1 << (n))
 
 /* GPIO port bit set/reset register */
 
 #define GPIO_BSRR_SET(n) (1 << (n))
 #define GPIO_BSRR_RST(n) (1 << (n + 16))
 
-#define LED_DELAY 100
+#define LED_DELAY 3000
 
-static uint32_t led_status;
+
 static const char fw_version[] = {'V', '1', '.', '0'};
 static uint32_t led_status;
 
