@@ -28,6 +28,19 @@ void exti1_handler     (void) __attribute__ ((weak, alias("default_handler")));
 void exti2_handler     (void) __attribute__ ((weak, alias("default_handler")));
 void exti3_handler     (void) __attribute__ ((weak, alias("default_handler")));
 void exti4_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream0_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream1_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream2_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream3_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream4_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream5_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void dma1_stream6_handler      (void) __attribute__ ((weak, alias("default_handler")));
+void adc_handler       (void) __attribute__ ((weak, alias("default_handler")));
+void exti9_5_handler   (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_brk_tim9_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_up_tim10_handler     (void) __attribute__ ((weak, alias("default_handler")));
+void tim1_trg_com_tim11_handler(void) __attribute__ ((weak, alias("default_handler")));
+
 
 /* Variaveis exportadas pelo linker script */
 
