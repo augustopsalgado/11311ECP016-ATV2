@@ -12,6 +12,9 @@
 #define STM32_GPIOC_BASE            0x48000800U     /* 0x48000800-0x48000bff: GPIO
                                                         Port C */
 
+#define STM32_GPIOA_BASE 0x40020000 /* 0x40020000-0x400203FF: GPIO
+                                        Port A */
+
 /* Register Offsets *********************************************************/
 
 #define STM32_RCC_AHB1ENR_OFFSET    0x0030          /* AHB1 Peripheral Clock enable
@@ -20,6 +23,8 @@
 #define STM32_GPIO_MODER_OFFSET     0x0000          /* GPIO port mode register */
 
 #define STM32_GPIO_OTYPER_OFFSET    0x0004          /* GPIO port output type register */
+
+#define STM32_GPIO_IDR_OFFSET 0x0010 /* GPIO port output data register */
 
 #define STM32_GPIO_PUPDR_OFFSET     0x000c          /* GPIO port pull-up/pull-down
                                                         register */
@@ -33,6 +38,9 @@
 #define STM32_GPIOC_OTYPER (STM32_GPIOC_BASE+STM32_GPIO_OTYPER_OFFSET)
 #define STM32_GPIOC_PUPDR (STM32_GPIOC_BASE+STM32_GPIO_PUPDR_OFFSET)
 #define STM32_GPIOC_BSRR (STM32_GPIOC_BASE + STM32_GPIO_BSRR_OFFSET)
+#define STM32_GPIOA_MODER (STM32_GPIOA_BASE+STM32_GPIO_MODER_OFFSET)
+#define STM32_GPIOA_PUPDR (STM32_GPIOA_BASE+STM32_GPIO_PUPDR_OFFSET)
+#define STM32_GPIOA_IDR (STM32_GPIOA_BASE+STM32_GPIO_IDR_OFFSET)
 
 /* AHB1 Peripheral Clock enable register */
 
@@ -89,7 +97,7 @@ int main(int argc, char *argv[])
     uint32_t *pGPIOA_MODER = (uint32_t *)STM32_GPIOA_MODER;
     uint32_t *pGPIOA_PUPDR = (uint32_t *)STM32_GPIOA_PUPDR;
     uint32_t *pGPIOA_IDR = (uint32_t *)STM32_GPIOA_IDR;
-    
+
     /* Habilita clock GPIOC */
     
     reg = *pRCC_AHB1ENR;
