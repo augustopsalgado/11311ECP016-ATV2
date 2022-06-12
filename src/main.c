@@ -77,7 +77,7 @@ static uint32_t led_status;
 int main(int argc, char *argv[])
 {
     uint32_t reg;
-    uint32_t bot;
+        
     
     /* Ponteiros para registradores */
     
@@ -86,6 +86,9 @@ int main(int argc, char *argv[])
     uint32_t *pGPIOC_OTYPER = (uint32_t *)STM32_GPIOC_OTYPER;
     uint32_t *pGPIOC_PUPDR = (uint32_t *)STM32_GPIOC_PUPDR;
     uint32_t *pGPIOC_BSRR = (uint32_t *)STM32_GPIOC_BSRR;
+    uint32_t *pGPIOA_MODER = (uint32_t *)STM32_GPIOA_MODER;
+    uint32_t *pGPIOA_PUPDR = (uint32_t *)STM32_GPIOA_PUPDR;
+    uint32_t *pGPIOA_IDR = (uint32_t *)STM32_GPIOA_IDR;
     
     /* Habilita clock GPIOC */
     
@@ -123,13 +126,17 @@ int main(int argc, char *argv[])
     reg |= (GPIO_PUPDR_NONE << GPIO_PUPDR13_SHIFT);
     *pGPIOC_PUPDR = reg;
 
-	    bot = *pGPIOC_MODER;
-	bot |= (BOOT0_OUTPUT << BOOT0_SHIFT);
-    *pGPIOC_MODER = bot;
+    /* Configurando o PA0 como entrada pull-up on e pull-down off */
 
-	    bot = *pGPIOC_PUPDR;
-    bot |= (BOOT0_PULLUP << BOOT0_PULLUP_SHIFT);
-    *pGPIOC_PUPDR = bot;
+    reg = *pGPIOA_MODER;
+    reg &= ~(GPIO_MODER_MASK(0));
+    reg |= (GPIO_MODER_INPUT << GPIO_MODER_SHIFT(0));
+    *pGPIOA_MODER = reg;
+
+    reg = *pGPIOA_PUPDR;
+    reg &= ~(GPIO_PUPDR_MASK(0));
+    reg |= (GPIO_PUPDR_PULLUP << GPIO_PUPDR_SHIFT(0));
+    *pGPIOA_PUPDR = reg;
 
     while(1)
     {
