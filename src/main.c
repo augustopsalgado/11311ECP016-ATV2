@@ -48,7 +48,7 @@
 #define GPIO_MODER13_MASK (3 << GPIO_MODER13_SHIFT)
 
 /* GPIO port output type register */
-#define STM32_BOOT0_SHIFT
+#define BOOT0_SHIFT
 #define GPIO_OTYPER_PP (0)                      /* 0=Output push-pull */
 #define GPIO_OTYPER_OD (1)                      /* 1=Output open-drain */
 #define GPIO_OT13_SHIFT (13)
@@ -123,11 +123,11 @@ int main(int argc, char *argv[])
     reg |= (GPIO_PUPDR_NONE << GPIO_PUPDR13_SHIFT);
     *pGPIOC_PUPDR = reg;
 
-	bot = *pGPIOC_MODER;
+	    bot = *pGPIOC_MODER;
 	bot |= (BOOT0_OUTPUT << BOOT0_SHIFT);
     *pGPIOC_MODER = bot;
 
-	bot = *pGPIOC_PUPDR;
+	    bot = *pGPIOC_PUPDR;
     bot |= (BOOT0_PULLUP << BOOT0_PULLUP_SHIFT);
     *pGPIOC_PUPDR = bot;
 
