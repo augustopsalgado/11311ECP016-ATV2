@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
 
 /* AHB1 Base Addresses ******************************************************/
 
@@ -38,7 +39,7 @@
 #define RCC_AHB1ENR_GPIOCEN (1 << 2)            /* Bit 2: IO port C clock enable */
 
 /* GPIO port mode register */
-
+#define BOOT0_OUTPUT                            /* output botao*/
 #define GPIO_MODER_INPUT (0)                    /* Input */
 #define GPIO_MODER_OUTPUT (1)                   /* General purpose output mode */
 #define GPIO_MODER_ALT (2)                      /* Alternate mode */
@@ -47,17 +48,18 @@
 #define GPIO_MODER13_MASK (3 << GPIO_MODER13_SHIFT)
 
 /* GPIO port output type register */
-
+#define STM32_BOOT0_SHIFT
 #define GPIO_OTYPER_PP (0)                      /* 0=Output push-pull */
 #define GPIO_OTYPER_OD (1)                      /* 1=Output open-drain */
 #define GPIO_OT13_SHIFT (13)
 #define GPIO_OT13_MASK (1 << GPIO_OT13_SHIFT)
 
 /* GPIO port pull-up/pull-down register */
-
+#define BOOT0_PULLUP
 #define GPIO_PUPDR_NONE (0)                     /* No pull-up, pull-down */
 #define GPIO_PUPDR_PULLUP (1)                   /* Pull-up */
 #define GPIO_PUPDR_PULLDOWN (2)                 /* Pull-down */
+#define BOOT0_PULLUP_SHIFT
 #define GPIO_PUPDR13_SHIFT (26)
 #define GPIO_PUPDR13_MASK (3 << GPIO_PUPDR13_SHIFT)
 
@@ -75,6 +77,7 @@ static uint32_t led_status;
 int main(int argc, char *argv[])
 {
     uint32_t reg;
+    uint32_t bot;
     
     /* Ponteiros para registradores */
     
@@ -105,7 +108,28 @@ int main(int argc, char *argv[])
     reg = *pGPIOC_PUPDR;
     reg &= ~(GPIO_PUPDR13_MASK);
     reg |= (GPIO_PUPDR_NONE << GPIO_PUPDR13_SHIFT);
+    *pGPIOC_PUPDR = reg;reg = *pGPIOC_MODER;
+    reg &= ~(GPIO_MODER13_MASK);
+    reg |= (GPIO_MODER_OUTPUT << GPIO_MODER13_SHIFT);
+    *pGPIOC_MODER = reg;
+
+    reg = *pGPIOC_OTYPER;
+    reg &= ~(GPIO_OT13_MASK);
+    reg |= (GPIO_OTYPER_PP << GPIO_OT13_SHIFT);
+    *pGPIOC_OTYPER = reg;
+    
+    reg = *pGPIOC_PUPDR;
+    reg &= ~(GPIO_PUPDR13_MASK);
+    reg |= (GPIO_PUPDR_NONE << GPIO_PUPDR13_SHIFT);
     *pGPIOC_PUPDR = reg;
+
+	bot = *pGPIOC_MODER;
+	bot |= (BOOT0_OUTPUT << BOOT0_SHIFT);
+    *pGPIOC_MODER = bot;
+
+	bot = *pGPIOC_PUPDR;
+    bot |= (BOOT0_PULLUP << BOOT0_PULLUP_SHIFT);
+    *pGPIOC_PUPDR = bot;
 
     while(1)
     {
